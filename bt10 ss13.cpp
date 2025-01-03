@@ -1,62 +1,105 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#define MAX_SIZE 100
 
-const int MAX_SIZE = 100;
+int arr[MAX_SIZE];
+int n = 0; 
 
-void nhapMang(int arr[], int &n) {
-    cout << "Nhap so phan tu (0 < n <= 100): ";
-    cin >> n;
-    if (n <= 0 || n > MAX_SIZE) {
-        cout << "So phan tu khong hop le!\n";
+void nhap_Mang() {
+    printf("Nhap so phan tu trong khoang %d: ", MAX_SIZE);
+    scanf("%d", &n);
+
+    if (n > MAX_SIZE || n < 0) {
+        printf("So phan tu khong hop le!\n");
+        n = 0; 
         return;
     }
-    cout << "Nhap cac phan tu:\n";
+
     for (int i = 0; i < n; i++) {
-        cout << "arr[" << i << "] = ";
-        cin >> arr[i];
+        printf("Nhap phan tu thu %d: ", i + 1);
+        scanf("%d", &arr[i]);
     }
 }
 
-void xuatMang(int arr[], int n) {
-    cout << "Cac phan tu trong mang:\n";
+void print() {
+    printf("Cac phan tu trong mang la: ");
     for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
+        printf("%d ", arr[i]);
     }
-    cout << endl;
+    printf("\n");
 }
 
-// Các hàm thực hiện các chức năng còn lại
-// ... (Sẽ được bổ sung ở phần dưới)
+void them(int vitri, int giatri) {
+    if (vitri < 0 || vitri > n || n >= MAX_SIZE) {
+        printf("Vi tri chen khong hop le!\n");
+        return;
+    }
+
+    for (int i = n - 1; i >= vitri; i--) {
+        arr[i + 1] = arr[i];
+    }
+    arr[vitri] = giatri;
+    n++;
+}
+
+void sua(int vitrisua, int giatrisua) {
+    if (vitrisua < 0 || vitrisua >= n) {
+        printf("Vi tri sua khong hop le!\n");
+        return;
+    }
+    arr[vitrisua] = giatrisua;
+}
+
+void xoa(int vitri) {
+    if (vitri < 0 || vitri >= n) {
+        printf("Vi tri xoa khong hop le!\n");
+        return;
+    }
+
+    for (int i = vitri; i < n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    n--;
+}
 
 int main() {
-    int arr[MAX_SIZE];
-    int n = 0;
+    int vitri, giatri, vitrisua, vitrixoa,giatrisua, giatrixoa ;
     int choice;
 
     do {
-        cout << "\nMENU\n";
-        cout << "1. Nhap so phan tu va gia tri cac phan tu\n";
-        cout << "2. In ra gia tri cac phan tu\n";
-        cout << "3. Them mot phan tu\n";
-        cout << "4. Sua mot phan tu\n";
-        cout << "5. Xoa mot phan tu\n";
-        cout << "6. Sap xep cac phan tu\n";
-        cout << "7. Tim kiem phan tu\n";
-        cout << "8. Thoat\n";
-        cout << "Nhap lua chon cua ban: ";
-        cin >> choice;
+        printf("\nMENU:\n");
+        printf("1. Nhap mang\n2. In mang\n3. Them phan tu\n4. Sua phan tu\n5. Xoa phan tu\n6. Sap xep\n7. Tim kiem\n8. Thoat\n");
+        printf("Chon chuc nang: ");
+        scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                nhapMang(arr, n);
+                nhap_Mang();
                 break;
             case 2:
-                xuatMang(arr, n);
+                print();
                 break;
-            // Các case còn lại tương ứng với các hàm thực hiện chức năng
-            // ...
+            case 3:
+                printf("Nhap vi tri: ");
+                scanf("%d", &vitri);
+                printf("Nhap gia tri: ");
+                scanf("%d", &giatri);
+                them(vitri, giatri);
+                break;
+            case 4:
+                printf("Nhap vi tri: ");
+                scanf("%d", &vitrisua);
+                printf("Nhap gia tri muon sua: ");
+                scanf("%d", &giatrisua);
+                sua(vitrisua, giatrisua);
+                break;
+            case 5:
+                printf("Nhap vi tri can xoa: ");
+                scanf("%d", &vitrixoa);
+                xoa(vitrixoa);
+                break;
+          
             default:
-                cout << "Lua chon khong hop le!\n";
+                printf("Lua chon khong hop le!\n");
         }
     } while (choice != 8);
 
